@@ -1,0 +1,23 @@
+# Assignment files
+COMP475_Complete_Assignment.html
+COMP475_Complete_Assignment.md
+
+# IDE
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Model files
+*.h5
+*.hdf5
+
+# OS
+.DS_Store
+Thumbs.db
