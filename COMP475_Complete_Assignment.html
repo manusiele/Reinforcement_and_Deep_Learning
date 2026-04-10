@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMP 475 / ACMP 466 - Complete Assignment</title>
+    <style>
+        @page {
+            margin: 2cm;
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        .cover-page {
+            text-align: center;
+            padding: 100px 20px;
+            page-break-after: always;
+        }
+        .cover-page h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .cover-page h2 {
+            font-size: 1.8em;
+            margin: 30px 0;
+            color: #34495e;
+        }
+        .cover-page .info {
+            font-size: 1.2em;
+            margin: 15px 0;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 25px;
+            border-bottom: 2px solid #95a5a6;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 20px;
+        }
+        .metadata {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .word-count {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+        .reference {
+            margin-left: 20px;
+            text-indent: -20px;
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .diagram {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #bdc3c7;
+            margin: 30px 0;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        .note-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cover-page">
+    <h1>Reinforcement and Deep Learning</h1>
+    <h2>COMP 475 / ACMP 466</h2>
+    
+    <div style="margin: 60px 0;">
+        <div class="info"><strong>Assignment:</strong> Practical Tasks & Research Questions</div>
+        <div class="info"><strong>Total Marks:</strong> 30 (20% Practical, 10% Research)</div>
+        <div class="info"><strong>Student Registration Number:</strong> [YOUR REG NO]</div>
+        <div class="info"><strong>Submission Date:</strong> March 11, 2026</div>
+    </div>
+    
+    <div style="margin-top: 80px;">
+        <p><strong>Submitted to:</strong> COMP 475 / ACMP 466 Course Instructor</p>
+    </div>
+</div>
+
+<h1>Table of Contents</h1>
+<ol>
+    <li><strong>Part A: Practical Tasks (20 Marks)</strong>
+        <ul>
+            <li>Task 1: CNN for Fashion-MNIST Classification (10 Marks)</li>
+            <li>Task 2: RNN/LSTM for Stock Trend Forecasting (10 Marks)</li>
+        </ul>
+    </li>
+    <li><strong>Part B: Research Questions (10 Marks)</strong>
+        <ul>
+            <li>Question 1: Classification vs Regression</li>
+            <li>Question 2: Vanishing Gradient Problem & LSTMs</li>
+            <li>Question 3: Deep Q-Network (DQN)</li>
+            <li>Question 4: Epsilon-Greedy vs UCB</li>
+            <li>Question 5: Ethics in DRL</li>
+        </ul>
+    </li>
+    <li><strong>References</strong></li>
+</ol>
+
+<hr class="page-break">
+
+<h1>Part A: Practical Tasks (20 Marks)</h1>
+
+<h2>Practical Task 1: CNN for Fashion-MNIST Classification (10 Marks)</h2>
+
+<h3>Objective</h3>
+<p>Implement a Convolutional Neural Network to classify images from the Fashion-MNIST dataset into 10 fashion categories.</p>
+
+<h3>Implementation Summary</h3>
+
+<div class="note-box">
+    <strong>Note:</strong> Complete implementation is provided in the Jupyter notebook: <code>fashion_mnist_cnn.ipynb</code>
+</div>
+
+<h4>1. Dataset</h4>
+<ul>
+    <li><strong>Source:</strong> Fashion-MNIST (built into TensorFlow/Keras)</li>
+    <li><strong>Training samples:</strong> 60,000 grayscale images (28×28 pixels)</li>
+    <li><strong>Test samples:</strong> 10,000 images</li>
+    <li><strong>Classes:</strong> 10 (T-shirt/top, Trouser, Pullover, Dress, Coat, Sandal, Shirt, Sneaker, Bag, Ankle boot)</li>
+</ul>
+
+<h4>2. Data Preprocessing</h4>
+<ul>
+    <li><strong>Normalization:</strong> Pixel values scaled to [0, 1] range by dividing by 255.0</li>
+    <li><strong>Reshaping:</strong> Images reshaped to (28, 28, 1) to add channel dimension</li>
+    <li><strong>Label Encoding:</strong> One-hot encoding for 10 classes</li>
+</ul>
+
+<h4>3. CNN Architecture</h4>
+
+<table>
+    <tr>
+        <th>Layer</th>
+        <th>Configuration</th>
+        <th>Output Shape</th>
+    </tr>
+    <tr>
+        <td>Conv2D (1)</td>
+        <td>32 filters, 3×3 kernel, ReLU, padding='same'</td>
+        <td>(28, 28, 32)</td>
+    </tr>
+    <tr>
+        <td>MaxPooling2D (1)</td>
+        <td>2×2 pool size</td>
+        <td>(14, 14, 32)</td>
+    </tr>
+    <tr>
+        <td>Dropout (1)</td>
+        <td>Rate: 0.25</td>
+        <td>(14, 14, 32)</td>
+    </tr>
+    <tr>
+        <td>Conv2D (2)</td>
+        <td>64 filters, 3×3 kernel, ReLU, padding='same'</td>
+        <td>(14, 14, 64)</td>
+    </tr>
+    <tr>
+        <td>MaxPooling2D (2)</td>
+        <td>2×2 pool size</td>
+        <td>(7, 7, 64)</td>
+    </tr>
+    <tr>
+        <td>Dropout (2)</td>
+        <td>Rate: 0.25</td>
+        <td>(7, 7, 64)</td>
+    </tr>
+    <tr>
+        <td>Flatten</td>
+        <td>-</td>
+        <td>(3136,)</td>
+    </tr>
+    <tr>
+        <td>Dense</td>
+        <td>128 units, ReLU</td>
+        <td>(128,)</td>
+    </tr>
+    <tr>
+        <td>Dropout (3)</td>
+        <td>Rate: 0.5</td>
+        <td>(128,)</td>
+    </tr>
+    <tr>
+        <td>Dense (Output)</td>
+        <td>10 units, Softmax</td>
+        <td>(10,)</td>
+    </tr>
+</table>
+
+<h4>4. Architecture Choices Explanation</h4>
+
+<p><strong>Convolutional Layers:</strong></p>
+<ul>
+    <li><strong>First layer (32 filters):</strong> Detects low-level features like edges, textures, and simple patterns</li>
+    <li><strong>Second layer (64 filters):</strong> Captures more complex patterns and feature combinations</li>
+    <li><strong>3×3 kernel size:</strong> Standard choice providing good balance between receptive field and computational efficiency</li>
+</ul>
+
+<p><strong>MaxPooling Layers:</strong></p>
+<ul>
+    <li>Reduces spatial dimensions by half (2×2 pooling)</li>
+    <li>Provides translation invariance</li>
+    <li>Reduces computational cost and parameters</li>
+</ul>
+
+<p><strong>Dropout Regularization:</strong></p>
+<ul>
+    <li>0.25 after convolutional blocks: Mild regularization</li>
+    <li>0.5 after dense layer: Stronger regularization where overfitting is more likely</li>
+    <li>Prevents co-adaptation of neurons</li>
+</ul>
+
+<p><strong>Dense Layer (128 units):</strong></p>
+<ul>
+    <li>Learns high-level feature combinations</li>
+    <li>ReLU activation for non-linearity</li>
+</ul>
+
+<p><strong>Output Layer:</strong></p>
+<ul>
+    <li>10 units (one per class)</li>
+    <li>Softmax activation produces probability distribution</li>
+</ul>
+
+<h4>5. Training Configuration</h4>
+<ul>
+    <li><strong>Optimizer:</strong> Adam (adaptive learning rate)</li>
+    <li><strong>Loss Function:</strong> Categorical Cross-Entropy</li>
+    <li><strong>Metrics:</strong> Accuracy</li>
+    <li><strong>Epochs:</strong> 15</li>
+    <li><strong>Batch Size:</strong> 128</li>
+    <li><strong>Validation Split:</strong> 20% of training data</li>
+</ul>
+
+<h4>6. Expected Results</h4>
+<ul>
+    <li><strong>Test Accuracy:</strong> ~90-92%</li>
+    <li><strong>Training Time:</strong> ~5-10 minutes on GPU</li>
+    <li><strong>Model Parameters:</strong> ~1.2 million trainable parameters</li>
+</ul>
+
+<h4>7. Evaluation Metrics</h4>
+<p>The notebook includes:</p>
+<ul>
+    <li><strong>Accuracy and Loss Curves:</strong> Training vs validation performance over epochs</li>
+    <li><strong>Confusion Matrix:</strong> Heatmap showing classification performance per class</li>
+    <li><strong>Classification Report:</strong> Precision, recall, and F1-score for each class</li>
+    <li><strong>Sample Predictions:</strong> Visual comparison of predicted vs actual labels</li>
+</ul>
+
+<h4>8. Discussion of Results</h4>
+
+<p><strong>Overfitting Analysis:</strong></p>
+<ul>
+    <li>Monitor gap between training and validation accuracy</li>
+    <li>If validation loss increases while training loss decreases → overfitting</li>
+    <li>Dropout layers help mitigate overfitting</li>
+    <li>Typical gap of 2-3% is acceptable</li>
+</ul>
+
+<p><strong>Common Misclassifications:</strong></p>
+<ul>
+    <li>Shirt vs T-shirt/top (similar visual appearance)</li>
+    <li>Pullover vs Coat (overlapping features)</li>
+    <li>Sneaker vs Ankle boot (similar footwear category)</li>
+</ul>
+
+<p><strong>Performance Improvements:</strong></p>
+<ol>
+    <li><strong>Data Augmentation:</strong> Random rotations, shifts, zooms to increase training diversity</li>
+    <li><strong>Batch Normalization:</strong> Add after convolutional layers for faster convergence</li>
+    <li><strong>Learning Rate Scheduling:</strong> Reduce learning rate when validation loss plateaus</li>
+    <li><strong>Deeper Architecture:</strong> Add third convolutional block with 128 filters</li>
+    <li><strong>Early Stopping:</strong> Stop training when validation performance stops improving</li>
+    <li><strong>Ensemble Methods:</strong> Combine predictions from multiple models</li>
+</ol>
+
+<hr class="page-break">
+
+<h2>Practical Task 2: RNN/LSTM for Stock Trend Forecasting (10 Marks)</h2>
+
+<h3>Objective</h3>
+<p>Build an LSTM model to predict the next day's closing price direction (up/down) using historical stock data.</p>
+
+<h3>Implementation Summary</h3>
+
+<div class="note-box">
+    <strong>Note:</strong> Complete implementation is provided in the Jupyter notebook: <code>stock_lstm_forecasting.ipynb</code>
+</div>
+
+<h4>1. Dataset</h4>
+<ul>
+    <li><strong>Source:</strong> Yahoo Finance (via yfinance library)</li>
+    <li><strong>Stock:</strong> AAPL (Apple Inc.)</li>
+    <li><strong>Period:</strong> 2019-01-01 to 2024-12-31 (5 years)</li>
+    <li><strong>Feature:</strong> Daily closing prices</li>
+    <li><strong>Total Samples:</strong> ~1,500 trading days</li>
+</ul>
+
+<h4>2. Data Preprocessing</h4>
+
+<p><strong>Normalization:</strong></p>
+<ul>
+    <li>MinMaxScaler applied to scale prices to [0, 1] range</li>
+    <li>Prevents gradient issues and improves training stability</li>
+    <li>Scaler fitted on training data only to prevent data leakage</li>
+</ul>
+
+<p><strong>Sequence Creation:</strong></p>
+<ul>
+    <li><strong>Sequence Length:</strong> 15 days (lookback window)</li>
+    <li><strong>Input (X):</strong> 15 consecutive days of normalized closing prices</li>
+    <li><strong>Output (y):</strong> Binary label (1 if next day price > current day price, else 0)</li>
+    <li><strong>Total Sequences:</strong> ~1,485 sequences</li>
+</ul>
+
+<p><strong>Data Split:</strong></p>
+<ul>
+    <li><strong>Training Set:</strong> 70% (~1,040 sequences)</li>
+    <li><strong>Validation Set:</strong> 15% (~223 sequences)</li>
+    <li><strong>Test Set:</strong> 15% (~222 sequences)</li>
+    <li><strong>Note:</strong> Sequential split (no shuffling) to maintain temporal order</li>
+</ul>
+
+<h4>3. Sequence Length Choice (15 Days)</h4>
+
+<p><strong>Rationale:</strong></p>
+<ul>
+    <li>Captures approximately 3 weeks of trading patterns</li>
+    <li>Balance between short-term trends and noise reduction</li>
+    <li>Sufficient for detecting momentum and reversal patterns</li>
+</ul>
+
+<p><strong>Trade-offs:</strong></p>
+<ul>
+    <li><strong>Too Short (5 days):</strong> May miss longer-term patterns, more susceptible to noise</li>
+    <li><strong>Too Long (30+ days):</strong> May include irrelevant historical data, harder to learn</li>
+    <li><strong>15 days:</strong> Optimal balance based on empirical testing</li>
+</ul>
+
+<h4>4. LSTM Model Architecture</h4>
+
+<table>
+    <tr>
+        <th>Layer</th>
+        <th>Configuration</th>
+        <th>Output Shape</th>
+    </tr>
+    <tr>
+        <td>LSTM (1)</td>
+        <td>64 units, return_sequences=True</td>
+        <td>(15, 64)</td>
+    </tr>
+    <tr>
+        <td>Dropout (1)</td>
+        <td>Rate: 0.3</td>
+        <td>(15, 64)</td>
+    </tr>
+    <tr>
+        <td>LSTM (2)</td>
+        <td>32 units, return_sequences=False</td>
+        <td>(32,)</td>
+    </tr>
+    <tr>
+        <td>Dropout (2)</td>
+        <td>Rate: 0.3</td>
+        <td>(32,)</td>
+    </tr>
+    <tr>
+        <td>Dense</td>
+        <td>16 units, ReLU</td>
+        <td>(16,)</td>
+    </tr>
+    <tr>
+        <td>Dropout (3)</td>
+        <td>Rate: 0.2</td>
+        <td>(16,)</td>
+    </tr>
+    <tr>
+        <td>Dense (Output)</td>
+        <td>1 unit, Sigmoid</td>
+        <td>(1,)</td>
+    </tr>
+</table>
+
+<h4>5. Training Configuration</h4>
+<ul>
+    <li><strong>Optimizer:</strong> Adam</li>
+    <li><strong>Loss Function:</strong> Binary Cross-Entropy</li>
+    <li><strong>Metrics:</strong> Accuracy</li>
+    <li><strong>Epochs:</strong> 50 (with early stopping)</li>
+    <li><strong>Batch Size:</strong> 32</li>
+    <li><strong>Early Stopping:</strong> Patience of 10 epochs on validation loss</li>
+</ul>
+
+<h4>6. Baseline Comparison</h4>
+
+<p>The model is compared against three simple baselines:</p>
+
+<table>
+    <tr>
+        <th>Strategy</th>
+        <th>Description</th>
+        <th>Expected Accuracy</th>
+    </tr>
+    <tr>
+        <td>Always Predict "UP"</td>
+        <td>Predict price will increase every day</td>
+        <td>~50-55% (depends on market trend)</td>
+    </tr>
+    <tr>
+        <td>Always Predict "DOWN"</td>
+        <td>Predict price will decrease every day</td>
+        <td>~45-50%</td>
+    </tr>
+    <tr>
+        <td>Random Prediction</td>
+        <td>Randomly predict up or down</td>
+        <td>~50%</td>
+    </tr>
+    <tr>
+        <td><strong>LSTM Model</strong></td>
+        <td>Learned from historical patterns</td>
+        <td><strong>Target: >55%</strong></td>
+    </tr>
+</table>
+
+<h4>7. Evaluation Metrics</h4>
+<p>The notebook includes:</p>
+<ul>
+    <li><strong>Test Accuracy:</strong> Model performance on unseen data</li>
+    <li><strong>Confusion Matrix:</strong> True positives, false positives, true negatives, false negatives</li>
+    <li><strong>Classification Report:</strong> Precision, recall, F1-score for both classes</li>
+    <li><strong>Training History:</strong> Accuracy and loss curves over epochs</li>
+    <li><strong>Prediction Visualization:</strong> Actual vs predicted trends</li>
+</ul>
+
+<h4>8. Discussion: Is LSTM Better Than Baseline?</h4>
+
+<p><strong>Interpretation Guidelines:</strong></p>
+<ul>
+    <li><strong>Improvement > 5%:</strong> Model learned meaningful patterns from historical data</li>
+    <li><strong>Improvement 0-5%:</strong> Marginal improvement, may not be statistically significant</li>
+    <li><strong>Improvement < 0%:</strong> Model underperforms baseline, likely overfitting or market too random</li>
+</ul>
+
+<p><strong>Expected Outcome:</strong></p>
+<p>Stock prediction is inherently challenging, and even small improvements over baseline (2-5%) can be considered successful given the efficient market hypothesis. The LSTM may capture short-term momentum patterns but struggles with longer-term predictions due to market randomness.</p>
+
+<h4>9. Why Stock Prediction is Challenging</h4>
+
+<ol>
+    <li><strong>Market Efficiency Hypothesis:</strong> Prices already reflect all available information, making prediction difficult</li>
+    
+    <li><strong>Random Walk Theory:</strong> Stock prices follow largely random patterns, especially in short timeframes</li>
+    
+    <li><strong>External Factors:</strong> News events, earnings reports, macroeconomic changes not captured in price data alone</li>
+    
+    <li><strong>Non-Stationarity:</strong> Market dynamics and patterns change over time, making historical patterns unreliable</li>
+    
+    <li><strong>High Noise-to-Signal Ratio:</strong> Daily price movements contain significant noise relative to predictable signals</li>
+    
+    <li><strong>Limited Features:</strong> Using only closing prices ignores volume, volatility, sentiment, and other important factors</li>
+    
+    <li><strong>Overfitting Risk:</strong> Model may learn historical patterns that don't generalize to future market conditions</li>
+</ol>
+
+<h4>10. Potential Improvements</h4>
+
+<ol>
+    <li><strong>Additional Features:</strong>
+        <ul>
+            <li>Trading volume</li>
+            <li>Moving averages (SMA, EMA)</li>
+            <li>Technical indicators (RSI, MACD, Bollinger Bands)</li>
+            <li>Volatility measures (ATR)</li>
+        </ul>
+    </li>
+    
+    <li><strong>Advanced Techniques:</strong>
+        <ul>
+            <li>Sentiment analysis from news and social media</li>
+            <li>Attention mechanisms to focus on important time steps</li>
+            <li>Ensemble methods combining multiple models</li>
+            <li>Transformer architecture instead of LSTM</li>
+        </ul>
+    </li>
+    
+    <li><strong>Hyperparameter Tuning:</strong>
+        <ul>
+            <li>Different sequence lengths (10, 20, 30 days)</li>
+            <li>Various LSTM unit sizes</li>
+            <li>Learning rate scheduling</li>
+            <li>Different dropout rates</li>
+        </ul>
+    </li>
+    
+    <li><strong>Multi-Stock Training:</strong>
+        <ul>
+            <li>Train on multiple stocks for better generalization</li>
+            <li>Sector-specific models</li>
+            <li>Cross-validation across different time periods</li>
+        </ul>
+    </li>
+</ol>
+
+<div class="note-box">
+    <strong>⚠️ Important Disclaimer:</strong> This model is for EDUCATIONAL purposes ONLY. Past performance does NOT guarantee future results. DO NOT use this model for actual trading decisions. Financial markets are complex and unpredictable. Always consult with financial professionals before investing.
+</div>
+
+<hr class="page-break">
+
+<h1>Part B: Research Questions (10 Marks)</h1>
+
+<p><em>Each answer is 300-500 words with at least one citation.</em></p>
+
+<hr>
+
+<h2>Question 1: Classification vs Regression in Deep Learning</h2>
+
+<h3>Overview</h3>
+<p>Classification and regression are two fundamental supervised learning paradigms in deep learning, distinguished primarily by their output types and objectives. Classification predicts discrete categorical labels, while regression predicts continuous numerical values (Goodfellow et al., 2016).</p>
+
+<h3>Key Differences</h3>
+<p><strong>Classification</strong> involves mapping input data to discrete class labels. For example, image recognition systems classify images into categories like "cat," "dog," or "bird." The output layer typically uses softmax activation for multi-class problems or sigmoid for binary classification. Real-world applications include:</p>
+<ul>
+    <li>Medical diagnosis (disease present/absent)</li>
+    <li>Spam email detection (spam/not spam)</li>
+    <li>Sentiment analysis (positive/negative/neutral)</li>
+</ul>
+
+<p><strong>Regression</strong> predicts continuous values. Examples include:</p>
+<ul>
+    <li>House price prediction based on features</li>
+    <li>Stock price forecasting</li>
+    <li>Temperature prediction in weather systems</li>
+</ul>
+
+<h3>Loss Functions</h3>
+<p>The choice of loss function is critical and must align with the problem type:</p>
+
+<p><strong>Classification Loss Functions:</strong></p>
+<ul>
+    <li><strong>Binary Cross-Entropy:</strong> For binary classification, measures the difference between predicted probabilities and true labels</li>
+    <li><strong>Categorical Cross-Entropy:</strong> For multi-class problems, penalizes incorrect class predictions</li>
+    <li><strong>Sparse Categorical Cross-Entropy:</strong> Similar but accepts integer labels instead of one-hot encoded vectors</li>
+</ul>
+
+<p><strong>Regression Loss Functions:</strong></p>
+<ul>
+    <li><strong>Mean Squared Error (MSE):</strong> Penalizes large errors quadratically, sensitive to outliers</li>
+    <li><strong>Mean Absolute Error (MAE):</strong> More robust to outliers, linear penalty</li>
+    <li><strong>Huber Loss:</strong> Combines MSE and MAE benefits</li>
+</ul>
+
+<h3>Mismatched Loss Functions</h3>
+<p>Using classification loss for regression problems leads to several issues:</p>
+<ol>
+    <li><strong>Inappropriate Output Range:</strong> Softmax/sigmoid outputs are bounded [0,1], restricting regression predictions</li>
+    <li><strong>Discretization Artifacts:</strong> The model may learn to output discrete probability distributions rather than continuous values</li>
+    <li><strong>Gradient Issues:</strong> Cross-entropy gradients are designed for probability distributions, not continuous targets</li>
+    <li><strong>Poor Convergence:</strong> The optimization landscape becomes ill-suited for the task, leading to suboptimal solutions</li>
+</ol>
+
+<p>For instance, predicting house prices (ranging from $100K to $1M) with cross-entropy loss would force the model to treat each price as a separate class, losing the inherent ordering and distance relationships between values.</p>
+
+<p class="word-count"><strong>Word Count:</strong> 342</p>
+
+<p class="reference"><strong>Reference:</strong><br>
+Goodfellow, I., Bengio, Y., & Courville, A. (2016). <em>Deep Learning</em>. MIT Press.</p>
+
+<hr class="page-break">
+
+<h2>Question 2: Vanishing Gradient Problem in RNNs and LSTM Solutions</h2>
+
+<h3>Mathematical Explanation of Vanishing Gradients</h3>
+<p>The vanishing gradient problem in Recurrent Neural Networks (RNNs) occurs during backpropagation through time (BPTT). Consider an RNN with hidden state h<sub>t</sub>:</p>
+
+<pre>h<sub>t</sub> = tanh(W<sub>hh</sub> * h<sub>t-1</sub> + W<sub>xh</sub> * x<sub>t</sub> + b<sub>h</sub>)</pre>
+
+<p>During backpropagation, gradients flow backward through time. The gradient of the loss L with respect to h<sub>t</sub> at time step k is:</p>
+
+<pre>∂L/∂h<sub>k</sub> = ∂L/∂h<sub>T</sub> * ∏(t=k+1 to T) ∂h<sub>t</sub>/∂h<sub>t-1</sub></pre>
+
+<p>Each term ∂h<sub>t</sub>/∂h<sub>t-1</sub> involves the weight matrix W<sub>hh</sub> and the derivative of the activation function:</p>
+
+<pre>∂h<sub>t</sub>/∂h<sub>t-1</sub> = W<sub>hh</sub> * diag(tanh'(h<sub>t-1</sub>))</pre>
+
+<p>Since tanh'(x) ≤ 1 and typically much smaller, repeated multiplication causes exponential decay. If ||W<sub>hh</sub>|| < 1, gradients vanish; if ||W<sub>hh</sub>|| > 1, they explode (Pascanu et al., 2013).</p>
+
+<p>For a sequence of length T, the gradient magnitude scales as:</p>
+
+<pre>||∂L/∂h<sub>0</sub>|| ≈ ||W<sub>hh</sub>||<sup>T</sup> * ||∂L/∂h<sub>T</sub>||</pre>
+
+<p>When T is large (e.g., 100 time steps) and ||W<sub>hh</sub>|| < 1, gradients become negligibly small, preventing the network from learning long-term dependencies.</p>
+
+<h3>LSTM Mitigation Strategy</h3>
+<p>Long Short-Term Memory (LSTM) networks address this through a gated cell state mechanism that allows gradients to flow unchanged across many time steps (Hochreiter & Schmidhuber, 1997).</p>
+
+<h3>LSTM Cell Architecture</h3>
+<div class="diagram">
+┌─────────────────────────────────────────────────────┐
+│                    LSTM Cell                        │
+│                                                     │
+│  C<sub>t-1</sub> ────────┬──────[×]────[+]──────> C<sub>t</sub>     │
+│                  │       │      │                   │
+│                  │       │      │                   │
+│              [forget] [input] [tanh]                │
+│                  │       │      │                   │
+│                  │       │      │                   │
+│  h<sub>t-1</sub> ────────┴───────┴──────┴────[×]──> h<sub>t</sub>   │
+│                                       │             │
+│  x<sub>t</sub> ─────────────────────────────────────┘             │
+│                                    [output]         │
+│                                                     │
+│  Gates:                                             │
+│  • Forget gate: f<sub>t</sub> = σ(W<sub>f</sub>·[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>f</sub>) │
+│  • Input gate:  i<sub>t</sub> = σ(W<sub>i</sub>·[h<sub>t-1</sub>, x<sub>t</sub>] + b<s
