@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Compiler - COMP 475 / ACMP 466</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="url"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .image-upload {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .image-upload:hover {
+            background: #f0f4ff;
+            border-color: #764ba2;
+        }
+
+        .image-upload input[type="file"] {
+            display: none;
+        }
+
+        .image-preview {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .image-preview.active {
+            display: block;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        .preview-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .preview-section.active {
+            display: block;
+        }
+
+        #pdfPreview {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 40px;
+            background: white;
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            color: #0c5460;
+        }
+
+        .remove-image {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .remove-image:hover {
+            background: #c82333;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .actions, .header, .content > *:not(#pdfPreview) {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Assignment Compiler</h1>
+            <p>Reinforcement and Deep Learning (COMP 475 / ACMP 466)</p>
+            <p>Total Marks: 30 (20% Practical, 10% Research)</p>
+        </div>
+
+        <div class="content">
+            <div class="alert alert-info">
+                <strong>📝 Instructions:</strong> Fill in all sections, upload screenshots where needed, and generate your final PDF for submission.
+            </div>
+
+            <!-- Student Information -->
+            <div class="section">
+                <h2>👤 Student Information</h2>
+                <div class="form-group">
+                    <label>Registration Number *</label>
+                    <input type="text" id="regNo" placeholder="e.g., INP12.0004.24" required>
+                </div>
+                <div class="form-group">
+                    <label>Student Name *</label>
+                    <input type="text" id="studentName" placeholder="Your Full Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Submission Date</label>
+                    <input type="text" id="submissionDate" value="March 11, 2026" readonly>
+                </div>
+            </div>
+
+            <!-- Part A: Practical Task 1 -->
+            <div class="section">
+                <h2>🖼️ Part A: Practical Task 1 - CNN for Fashion-MNIST (10 Marks)</h2>
+                
+                <div class="form-group">
+                    <label>GitHub Repository Link / Code Link</label>
+                    <input type="url" id="task1Repo" placeholder="https://github.com/username/fashion-mnist-cnn">
+                </div>
+
+                <div class="form-group">
+                    <label>Architecture Explanation</label>
+                    <textarea id="task1Architecture" placeholder="Explain your CNN architecture choices (filters, kernel size, layers, etc.)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Training & Validation Curves Screenshot</label>
+                    <div class="image-upload" onclick="document.getElementById('task1Curves').click()">
+                        <input type="file" id="task1Curves" accept="image/*" onchange="previewImage(this, 'preview1Curves')">
+                        <p>📸 Click to upload accuracy/loss curves</p>
+                    </div>
+                    <div id="preview1Curves" class="image-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confusion Matrix Screenshot</label>
+                    <div class="image-upload" onclick="document.getElementById('task1Confusion').click()">
+                        <input type="file" id="task1Confusion" accept="image/*" onchange="previewImage(this, 'preview1Confusion')">
+                        <p>📸 Click to upload confusion matrix</p>
+                    </div>
+                    <div id="preview1Confusion" class="image-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Classification Report Screenshot</label>
+                    <div class="image-upload" onclick="document.getElementById('task1Report').click()">
+                        <input type="file" id="task1Report" accept="image/*" onchange="previewImage(this, 'preview1Report')">
+                        <p>📸 Click to upload classification report</p>
+                    </div>
+                    <div id="preview1Report" class="image-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Results Discussion</label>
+                    <textarea id="task1Discussion" placeholder="Did the model overfit? How could performance be improved?"></textarea>
+                </div>
+            </div>
+
+            <!-- Part A: Practical Task 2 -->
+            <div class="section">
+                <h2>📈 Part A: Practical Task 2 - LSTM for Stock Forecasting (10 Marks)</h2>
+                
+                <div class="form-group">
+                    <label>GitHub Repository Link / Code Link</label>
+                    <input type="url" id="task2Repo" placeholder="https://github.com/username/stock-lstm-forecasting">
+                </div>
+
+                <div class="form-group">
+                    <label>Preprocessing & Sequence Length Explanation</label>
+                    <textarea id="task2Preprocessing" placeholder="Explain your sequence length choice and preprocessing decisions"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Training History Screenshot</label>
+                    <div class="image-upload" onclick="document.getElementById('task2History').click()">
+                        <input type="file" id="task2History" accept="image/*" onchange="previewImage(this, 'preview2History')">
+                        <p>📸 Click to upload training history</p>
+                    </div>
+                    <div id="preview2History" class="image-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confusion Matrix Screenshot</label>
+                    <div class="image-upload" onclick="document.getElementById('task2Confusion').click()">
+                        <input type="file" id="task2Confusion" accept="image/*" onchange="previewImage(this, 'preview2Confusion')">
+                        <p>📸 Click to upload confusion matrix</p>
+                    </div>
+                    <div id="preview2Confusion" class="image-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Baseline Comparison Screenshot</label>
+                    <div class="image-upload" onclick="document.getElementById('task2Baseline').click()">
+                        <input type="file" id="task2Baseline" accept="image/*" onchange="previewImage(this, 'preview2Baseline')">
+                        <p>📸 Click to upload baseline comparison</p>
+                    </div>
+                    <div id="preview2Baseline" class="image-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Results Discussion</label>
+                    <textarea id="task2Discussion" placeholder="Is LSTM better than baseline? Why is stock prediction challenging?"></textarea>
+                </div>
+            </div>
+
+            <!-- Part B: Research Questions -->
+            <div class="section">
+                <h2>📚 Part B: Research Questions (10 Marks)</h2>
+                <div class="alert alert-info">
+                    <strong>Note:</strong> Your research questions document will be embedded. Make sure it includes all 5 questions with citations.
+                </div>
+                <div class="form-group">
+                    <label>Research Questions Document Status</label>
+                    <p style="color: #28a745; font-weight: 600;">✅ Part_B_Research_Questions.html is ready</p>
+                    <p style="font-size: 0.9em; color: #666;">The research questions will be automatically included in your final PDF.</p>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions">
+                <button class="btn btn-primary" onclick="generatePreview()">👁️ Preview Assignment</button>
+                <button class="btn btn-success" onclick="generatePDF()">📄 Generate PDF</button>
+                <button class="btn btn-secondary" onclick="resetForm()">🔄 Reset Form</button>
+            </div>
+
+            <!-- Preview Section -->
+            <div id="previewSection" class="preview-section">
+                <div class="section">
+                    <h2>📋 Preview</h2>
+                    <div id="pdfPreview"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <br>
+                        <button class="remove-image" onclick="removeImage('${input.id}', '${previewId}')">Remove Image</button>
+                    `;
+                    preview.classList.add('active');
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeImage(inputId, previewId) {
+            document.getElementById(inputId).value = '';
+            const preview = document.getElementById(previewId);
+            preview.innerHTML = '';
+            preview.classList.remove('active');
+        }
+
+        function getImageData(inputId) {
+            const input = document.getElementById(inputId);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                return new Promise((resolve) => {
+                    reader.onload = function(e) {
+                        resolve(e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                });
+            }
+            return Promise.resolve(null);
+        }
+
+        async function generatePreview() {
+            const regNo = document.getElementById('regNo').value;
+            const studentName = document.getElementById('studentName').value;
+
+            if (!regNo || !studentName) {
+                alert('Please fill in your Registration Number and Name!');
+                return;
+            }
+
+            const preview = document.getElementById('pdfPreview');
+            let html = `
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h1 style="color: #667eea;">Reinforcement and Deep Learning</h1>
+                    <h2>COMP 475 / ACMP 466</h2>
+                    <p><strong>Student:</strong> ${studentName}</p>
+                    <p><strong>Registration Number:</strong> ${regNo}</p>
+                    <p><strong>Submission Date:</strong> ${document.getElementById('submissionDate').value}</p>
+                    <hr style="margin: 30px 0;">
+                </div>
+
+                <h2 style="color: #667eea;">Part A: Practical Tasks (20 Marks)</h2>
+                
+                <h3>Task 1: CNN for Fashion-MNIST Classification (10 Marks)</h3>
+                <p><strong>GitHub Repository:</strong> <a href="${document.getElementById('task1Repo').value}">${document.getElementById('task1Repo').value || 'Not provided'}</a></p>
+                
+                <h4>Architecture Explanation:</h4>
+                <p>${document.getElementById('task1Architecture').value || 'Not provided'}</p>
+            `;
+
+            // Add Task 1 images
+            const task1Curves = await getImageData('task1Curves');
+            if (task1Curves) {
+                html += `<h4>Training & Validation Curves:</h4><img src="${task1Curves}" style="max-width: 100%; margin: 20px 0;">`;
+            }
+
+            const task1Confusion = await getImageData('task1Confusion');
+            if (task1Confusion) {
+                html += `<h4>Confusion Matrix:</h4><img src="${task1Confusion}" style="max-width: 100%; margin: 20px 0;">`;
+            }
+
+            const task1Report = await getImageData('task1Report');
+            if (task1Report) {
+                html += `<h4>Classification Report:</h4><img src="${task1Report}" style="max-width: 100%; margin: 20px 0;">`;
+            }
+
+            html += `<h4>Results Discussion:</h4><p>${document.getElementById('task1Discussion').value || 'Not provided'}</p>`;
+
+            html += `
+                <div style="page-break-before: always;"></div>
+                <h3>Task 2: LSTM for Stock Trend Forecasting (10 Marks)</h3>
+                <p><strong>GitHub Repository:</strong> <a href="${document.getElementById('task2Repo').value}">${document.getElementById('task2Repo').value || 'Not provided'}</a></p>
+                
+                <h4>Preprocessing & Sequence Length Explanation:</h4>
+                <p>${document.getElementById('task2Preprocessing').value || 'Not provided'}</p>
+            `;
+
+            // Add Task 2 images
+            const task2History = await getImageData('task2History');
+            if (task2History) {
+                html += `<h4>Training History:</h4><img src="${task2History}" style="max-width: 100%; margin: 20px 0;">`;
+            }
+
+            const task2Confusion = await getImageData('task2Confusion');
+            if (task2Confusion) {
+                html += `<h4>Confusion Matrix:</h4><img src="${task2Confusion}" style="max-width: 100%; margin: 20px 0;">`;
+            }
+
+            const task2Baseline = await getImageData('task2Baseline');
+            if (task2Baseline) {
+                html += `<h4>Baseline Comparison:</h4><img src="${task2Baseline}" style="max-width: 100%; margin: 20px 0;">`;
+            }
+
+            html += `<h4>Results Discussion:</h4><p>${document.getElementById('task2Discussion').value || 'Not provided'}</p>`;
+
+            html += `
+                <div style="page-break-before: always;"></div>
+                <h2 style="color: #667eea;">Part B: Research Questions (10 Marks)</h2>
+                <p><em>Research questions document will be included in the final PDF.</em></p>
+            `;
+
+            preview.innerHTML = html;
+            document.getElementById('previewSection').classList.add('active');
+            document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function generatePDF() {
+            const regNo = document.getElementById('regNo').value;
+            
+            if (!regNo) {
+                alert('Please enter your Registration Number!');
+                return;
+            }
+
+            await generatePreview();
+
+            const element = document.getElementById('pdfPreview');
+            const opt = {
+                margin: [15, 15, 15, 15],
+                filename: `${regNo}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+            
+            alert(`PDF generated successfully as ${regNo}.pdf!\n\nNext steps:\n1. Open the downloaded PDF\n2. Manually append Part_B_Research_Questions.pdf\n3. Submit to Google Drive`);
+        }
+
+        function resetForm() {
+            if (confirm('Are you sure you want to reset the form? All data will be lost.')) {
+                document.querySelectorAll('input[type="text"], input[type="url"], textarea').forEach(el => {
+                    if (el.id !== 'submissionDate') el.value = '';
+                });
+                document.querySelectorAll('input[type="file"]').forEach(el => el.value = '');
+                document.querySelectorAll('.image-preview').forEach(el => {
+                    el.innerHTML = '';
+                    el.classList.remove('active');
+                });
+                document.getElementById('previewSection').classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
