@@ -2,11 +2,11 @@
 
 A Convolutional Neural Network (CNN) implementation for classifying Fashion-MNIST dataset images using TensorFlow/Keras.
 
-## 📋 Project Overview
+##  Project Overview
 
 This project implements a deep learning solution for classifying fashion items from the Fashion-MNIST dataset into 10 categories. The model achieves high accuracy using a custom CNN architecture with regularization techniques.
 
-## 🎯 Objective
+##  Objective
 
 Build and train a CNN to classify grayscale images (28x28 pixels) of fashion items into one of 10 categories:
 - T-shirt/top
@@ -20,7 +20,7 @@ Build and train a CNN to classify grayscale images (28x28 pixels) of fashion ite
 - Bag
 - Ankle boot
 
-## 🏗️ Model Architecture
+## Model Architecture
 
 ### CNN Design:
 - **Conv Layer 1:** 32 filters, 3x3 kernel, ReLU activation
@@ -40,7 +40,7 @@ Build and train a CNN to classify grayscale images (28x28 pixels) of fashion ite
 - **Dropout** prevents overfitting at multiple stages
 - **3x3 kernels** balance receptive field size and computational efficiency
 
-## 📊 Dataset
+## Dataset
 
 - **Source:** Fashion-MNIST (built into TensorFlow/Keras)
 - **Training samples:** 60,000
@@ -48,7 +48,7 @@ Build and train a CNN to classify grayscale images (28x28 pixels) of fashion ite
 - **Image size:** 28x28 grayscale
 - **Classes:** 10
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -62,21 +62,8 @@ pip install tensorflow numpy matplotlib seaborn scikit-learn
 2. Run all cells sequentially
 3. No additional setup required - all dependencies are pre-installed
 
-### Running Locally
 
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd fashion-mnist-cnn
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run Jupyter notebook
-jupyter notebook fashion_mnist_cnn.ipynb
-```
-
-## 📈 Training Details
+## Training Details
 
 - **Epochs:** 15
 - **Batch size:** 128
@@ -85,7 +72,7 @@ jupyter notebook fashion_mnist_cnn.ipynb
 - **Validation split:** 20%
 - **Training time:** ~5-10 minutes on GPU
 
-## 🎯 Results
+##  Results
 
 ### Expected Performance:
 - **Test Accuracy:** ~90-92%
@@ -98,7 +85,7 @@ jupyter notebook fashion_mnist_cnn.ipynb
 - Classification report (precision, recall, F1-score per class)
 - Sample predictions visualization
 
-## 📝 Key Findings
+## Key Findings
 
 ### Overfitting Analysis:
 - Monitor the gap between training and validation accuracy
@@ -110,7 +97,7 @@ jupyter notebook fashion_mnist_cnn.ipynb
 - Confusion matrix reveals common misclassifications
 - Model performs well on distinct categories (Trouser, Bag, Sneaker)
 
-## 🔧 Potential Improvements
+##  Potential Improvements
 
 1. **Data Augmentation:** Random rotations, shifts, and zooms
 2. **Batch Normalization:** Faster convergence and better generalization
@@ -119,7 +106,7 @@ jupyter notebook fashion_mnist_cnn.ipynb
 5. **Early Stopping:** Prevent overfitting with patience-based stopping
 6. **Ensemble Methods:** Combine multiple models for better predictions
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 fashion-mnist-cnn/
@@ -129,23 +116,23 @@ fashion-mnist-cnn/
 └── fashion_mnist_cnn_model.h5 # Saved trained model (generated after training)
 ```
 
-## 🎓 Academic Context
+## Academic Context
 
 **Course:** Deep Learning / Neural Networks  
 **Task:** Practical Task 1 - CNN for Fashion-MNIST Classification  
 **Marks:** 10  
 
-## 📚 References
+##  References
 
 - Fashion-MNIST Dataset: https://github.com/zalandoresearch/fashion-mnist
 - TensorFlow Documentation: https://www.tensorflow.org/
 - Keras API: https://keras.io/
 
-## 📄 License
+##  License
 
 This project is created for educational purposes.
 
-## 👤 Author
+##  Author
 
 Created as part of a deep learning practical assignment.
 
